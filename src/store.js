@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 
 const initState = {
-  mode: "WELCOME",
+  mode: "READ",
   welcome_content: {
     title: "WEB",
     desc: "Hello, WEB",
@@ -14,6 +14,13 @@ const initState = {
   ],
 };
 function reducer(state = initState, action) {
+  if (action.type === "CHANGE_MODE") {
+    // action 객체가 들어와서 reducer 함수가 호출되면, type을 확인한 뒤 'CHANGE_MODE' 라는 게 체크되면
+    // 현재의 원본 state를 spread syntax로 복사한 뒤, mode값만 action.mode로 바꿔서 리턴해 줌.
+    // 항상 state를 바꿀 땐 Immutable 하게! 원본은 건드리지 말 것!
+    return { ...state, mode: action.mode };
+  }
+
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.
   //   return initState;
   // }
@@ -22,7 +29,10 @@ function reducer(state = initState, action) {
   return state;
 }
 
-export default createStore(reducer);
+export default createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 /**
  * reducer()
@@ -41,4 +51,11 @@ export default createStore(reducer);
  *
  * reducer 함수는 store가 생성될 때 최초 1회에 한해서 무조건 실행이 되는데
  * 이 때, state의 최초값으로 리턴해주기 위해 작성해놓은 객체
+ */
+
+/**
+ * window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+ *
+ * 이거는 createStore() 함수의 두 번째 인자로 넣어주면
+ * 크롬 웹 브라우저에서 Redux devtools를 사용할 수 있게 해줌.
  */
