@@ -24,13 +24,13 @@ export default connect(function (state) {
 })(Read);
 
 /**
- * Article 컴포넌트도 재사용성을 위해
+ * Read 컴포넌트도 재사용성을 위해
  * container component와 presentational component를
  * 서로 다른 파일로 분리시켜서 관리하기로 함.
  */
 
 /**
- * Article 컴포넌트에서는 특별히 이벤트를 받아서
+ * Read 컴포넌트에서는 특별히 이벤트를 받아서
  * store에 dispatch 해주는 일이 없기 때문에
  *
  * 그냥 state만 props로 전달해주는
@@ -39,14 +39,14 @@ export default connect(function (state) {
  *
  * 우선, 변경된 state값이 인자로 전달되면서 mapStateToProps 함수가 호출되면,
  * state.mode가 'READ'인지, 'WELCOME'인지에 따라서 일차적으로
- * Article의 props에 어떤 state값을 넣어줄 지 결정해야 함.
+ * Read의 props에 어떤 state값을 넣어줄 지 결정해야 함.
  *
- * 만약 값이 'READ'라면, Article 컴포넌트에 전달하려는 props 이름과
+ * 만약 값이 'READ'라면, ReAD 컴포넌트에 전달하려는 props 이름과
  * 그거에 걸맞는 state 값의 key-value쌍 객체를 전달해주기 전에,
  * state.contents를 for loop로 돌려서
  * selected_content_id와 일치하는 content의 title, desc값을 찾아서 변수에 담아놓은 뒤,
  * 해당 변수를 value로 넣어줘서 리턴해야겠지!
  *
  * 이렇게 함으로써, 현재 선택된 content에 대한 state값이
- * Article 컴포넌트이 props에 각각 할당되는 셈!
+ * Read 컴포넌트이 props에 각각 할당되는 셈!
  */
