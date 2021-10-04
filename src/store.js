@@ -14,11 +14,20 @@ const initState = {
   ],
 };
 function reducer(state = initState, action) {
-  if (action.type === "CHANGE_MODE") {
-    // action 객체가 들어와서 reducer 함수가 호출되면, type을 확인한 뒤 'CHANGE_MODE' 라는 게 체크되면
-    // 현재의 원본 state를 spread syntax로 복사한 뒤, mode값만 action.mode로 바꿔서 리턴해 줌.
+  if (action.type === "WELCOME") {
+    // action 객체가 들어와서 reducer 함수가 호출되면, type을 확인한 뒤 'WELCOME' 이라는 게 체크되면
+    // 현재의 원본 state를 spread syntax로 복사한 뒤, mode값만 'WELCOME'으로 바꿔서 리턴해 줌.
     // 항상 state를 바꿀 땐 Immutable 하게! 원본은 건드리지 말 것!
-    return { ...state, mode: action.mode };
+    return { ...state, mode: "WELCOME" };
+  }
+  if (action.type === "READ") {
+    // type이 'READ'라는 게 확인되면, NavContainer로부터 dispatch된 action 객체가 왔구나! 라고 인지하고,
+    // mode를 'READ'로 변경해준 뒤, action객체에 실려온 id값을 selected_content_id에 할당된 복사&수정된 state를 리턴해 줌!
+    return {
+      ...state,
+      mode: "READ",
+      selected_content_id: action.id,
+    };
   }
 
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.
