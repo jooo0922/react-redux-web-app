@@ -7,6 +7,7 @@ const initState = {
     desc: "Hello, WEB",
   },
   selected_content_id: 1,
+  max_content_id: 3, // 'CREATE_PROCESS' mode에서 새로운 content를 추가할 때마다 +1을 한 다음 새로 생긴 content의 고유한 id값으로 넣어주기 위해 만든 값.
   contents: [
     { id: 1, title: "HTML", desc: "HTML is ..." },
     { id: 2, title: "CSS", desc: "CSS is ..." },
@@ -34,6 +35,26 @@ function reducer(state = initState, action) {
       ...state,
       mode: "CREATE",
     };
+  }
+  if (action.type === "CREATE_PROCESS") {
+    const newId = state.max_content_id + 1; // 새로운 content 객체의 id값으로 지정해줄 값을 미리 구해놓음.
+    const newContents = [
+      ...state.contents,
+      {
+        id: newId,
+        title: action.title,
+        desc: action.desc,
+      },
+    ]; // state.contents의 원본 배열을 복제한 뒤, 여기에 덮어쓸 새로운 content 객체를 만들어서 추가해 줌!
+
+    return {
+      ...state,
+      contents: newContents,
+      max_content_id: newId,
+      mode: "READ", // 이게 아이디어가 좋은 게, state를 변경하는 김에 mode도 'READ'로 바꾸고, selected_content_id도 방금 추가된 content의 id(newId)로 바꾸면,
+      // content가 추가되자마자 READ모드로 넘어가서 추가된 content를 Read 컴포넌트가 보여주도록 하는거지!
+      selected_content_id: newId,
+    }; // 이번에는 state 원본 전체를 복사한 뒤, contents 부분과 max_content_id 부분만 덮어쓸 내용을 추가하여 리턴해 줌!
   }
 
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.

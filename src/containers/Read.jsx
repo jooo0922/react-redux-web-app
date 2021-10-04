@@ -1,4 +1,4 @@
-import Article from "../components/Article"; // presentational component(wrapped component)를 가져옴.
+import Read from "../components/Read"; // presentational component(wrapped component)를 가져옴.
 import { connect } from "react-redux";
 
 export default connect(function (state) {
@@ -21,7 +21,7 @@ export default connect(function (state) {
     title: title,
     desc: desc,
   };
-})(Article);
+})(Read);
 
 /**
  * Article 컴포넌트도 재사용성을 위해
