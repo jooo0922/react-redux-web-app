@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 
 const initState = {
-  mode: "READ",
+  mode: "WELCOME",
   welcome_content: {
     title: "WEB",
     desc: "Hello, WEB",

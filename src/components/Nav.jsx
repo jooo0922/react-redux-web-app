@@ -11,7 +11,7 @@ export default class Nav extends Component {
             href="#"
             data-id={d.id}
             onClick={function (e) {
-              this.props.onClick(e.target.dataset.id);
+              this.props.onClick(Number(e.target.dataset.id));
             }.bind(this)}
           >
             {d.title}
@@ -51,4 +51,17 @@ export default class Nav extends Component {
  * 아마 이 Nav 컴포넌트를 감싸는 container component에서
  * connect 함수에서 전달되는 인자로 mapDispatchToProps() 함수를 이용해서
  * Nav의 onClick props에 dispatch()를 사용해서 id값을 보내주는 이벤트 핸들러 함수를 할당해줄거임!
+ */
+
+/**
+ * e.target.dataset.id -> 숫자로 바꾸기!!
+ *
+ * 얘는 store에 들어가서 selected_content_id 값으로 저장이 될텐데,
+ * 나중에 Article 컴포넌트에서 이 값과 각 content들의 id값을 비교할거란 말이지.
+ *
+ * 그런데 e.target.dataset.id 는 기본적으로 문자열로 리턴되기 때문에
+ * 숫자끼리 비교하려면 저 값을 강제로 숫자로 변환해줘야지.
+ *
+ * 그러려면 Number(e.target.dataset.id) 로 숫자로 변환한 다음
+ * 이벤트핸들러 함수에 넘겨줘야 함
  */
