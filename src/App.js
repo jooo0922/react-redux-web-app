@@ -3,12 +3,14 @@ import "./App.css";
 import Header from "./components/Header";
 import NavContainer from "./containers/Nav"; // container component를 파일에 따로 분리한 것을 가져옴.
 import ArticleContainer from "./containers/Article"; // container component를 파일에 따로 분리한 것을 가져옴.
+import ControlContainer from "./containers/Control"; // container component를 파일에 따로 분리한 것을 가져옴.
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
       <NavContainer></NavContainer>
+      <ControlContainer></ControlContainer>
       <ArticleContainer></ArticleContainer>
     </div>
   );

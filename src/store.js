@@ -29,6 +29,12 @@ function reducer(state = initState, action) {
       selected_content_id: action.id,
     };
   }
+  if (action.type === "CREATE") {
+    return {
+      ...state,
+      mode: "CREATE",
+    };
+  }
 
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.
   //   return initState;
