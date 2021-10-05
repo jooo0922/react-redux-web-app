@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import NavContainer from "./containers/Nav"; // container component를 파일에 따로 분리한 것을 가져옴.
 import ReadContainer from "./containers/Read"; // container component를 파일에 따로 분리한 것을 가져옴.
 import ControlContainer from "./containers/Control"; // container component를 파일에 따로 분리한 것을 가져옴.
+import UpdateContainer from "./containers/Update"; // container component를 파일에 따로 분리한 것을 가져옴.
 import CreateContainer from "./containers/Create"; // container component를 파일에 따로 분리한 것을 가져옴.
 import { connect } from "react-redux";
 import { Component } from "react";
@@ -17,6 +18,8 @@ class App extends Component {
       article = <ReadContainer></ReadContainer>; // WELCOME 모드여도 결국에는 ReadContainer 컴포넌트에서 welcome_content.title, welcome_content.desc값만 store로부터 가져와서 변경되니까!
     } else if (this.props.mode === "CREATE") {
       article = <CreateContainer></CreateContainer>;
+    } else if (this.props.mode === "UPDATE") {
+      article = <UpdateContainer></UpdateContainer>;
     }
 
     return (

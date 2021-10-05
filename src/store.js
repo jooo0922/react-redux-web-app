@@ -31,6 +31,7 @@ function reducer(state = initState, action) {
     };
   }
   if (action.type === "CREATE") {
+    // ControlContainer로부터 dispatch된 action 객체의 type이 CREATE면 모드를 CREATE로 변경
     return {
       ...state,
       mode: "CREATE",
@@ -55,6 +56,32 @@ function reducer(state = initState, action) {
       // content가 추가되자마자 READ모드로 넘어가서 추가된 content를 Read 컴포넌트가 보여주도록 하는거지!
       selected_content_id: newId,
     }; // 이번에는 state 원본 전체를 복사한 뒤, contents 부분과 max_content_id 부분만 덮어쓸 내용을 추가하여 리턴해 줌!
+  }
+  if (action.type === "UPDATE") {
+    // ControlContainer로부터 dispatch된 action 객체의 type이 UPDATE면 모드를 UPDATE로 변경
+    return {
+      ...state,
+      mode: "UPDATE",
+    };
+  }
+  if (action.type === "UPDATE_PROCESS") {
+    const newContents = [...state.contents]; // state.contents의 원본 배열을 복제함.
+
+    for (let i = 0; i < newContents.length; i++) {
+      if (newContents[i].id === action.id) {
+        newContents[i].title = action.title;
+        newContents[i].desc = action.desc;
+      }
+    } // 수정된 content의 id값(action에 실려옴)과 동일한 content를 찾은 뒤, title, desc 값을 action의 title, desc로 수정함.
+
+    return {
+      ...state,
+      contents: newContents,
+      mode: "READ", // state의 특정 content를 수정하는 김에 mode도 'READ'로 바꿔서
+      // 해당 content가 수정되자마자 READ모드로 넘어가서 수정된 content를 Read 컴포넌트가 보여주도록 하는거지!
+      selected_content_id: action.id, // selected_content_id를 action에 실려온 id값으로 지정해서 방금 수정된 content를 가리키도록 함.
+      // 이렇게 해야 Read의 container component가 방금 수정된 content를 화면에 보여주도록 mapStateToProps() 함수에서 props값을 할당해 줌.
+    };
   }
 
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.
