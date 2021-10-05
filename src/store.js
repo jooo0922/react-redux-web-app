@@ -83,6 +83,24 @@ function reducer(state = initState, action) {
       // 이렇게 해야 Read의 container component가 방금 수정된 content를 화면에 보여주도록 mapStateToProps() 함수에서 props값을 할당해 줌.
     };
   }
+  if (action.type === "DELETE_PROCESS") {
+    // 선택된 content를 제거하기 위해 filter라는 배열 메서드를 사용함.
+    // 인자로 전달된 함수를 통과하지 못해 false를 리턴받는 요소를 제외한 '새로운 배열'로 리턴해 줌.
+    // 이 '새로운 배열'이라는 게 참 중요함. Immutability 를 유지하면서 제거하고자 하는 content가 제외된
+    // 원본에서 복사된 새로운 배열을 리턴해주는 거니까! state.contents 는 건들지 않음!
+    const newContents = state.contents.filter(function (content) {
+      if (content.id === state.selected_content_id) {
+        return false; // 현재 선택된 요소와 id값이 동일한 content에 대해서만 false를 리턴함. -> 얘를 제외하고 나머지 요소들을 모아서 새로운 배열을 리턴함!
+      }
+      return true;
+    });
+
+    return {
+      ...state,
+      contents: newContents,
+      mode: "WELCOME", // 이제 선택된 요소를 삭제했으니, 그 요소로 'READ' 모드를 이용해서 들어갈 수 없음. 이럴 때 가기 만만한 곳이 'WELCOME'이라 거기로 모드를 전환하려는 것.
+    };
+  }
 
   // if (state === undefined) { 이 조건문은 항상 reducer 최초 실행을 의미.
   //   return initState;

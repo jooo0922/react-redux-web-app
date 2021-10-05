@@ -31,7 +31,7 @@ export default class Control extends Component {
             type="button"
             value="delete"
             onClick={function () {
-              this.props.onClick("DELETE");
+              this.props.onClick("DELETE_PROCESS"); // action.type으로 전달해줄 값인데, delete 버튼은 클릭하자마자 delete 모드로 전환되는 게 아니라, 바로 delete 작업 처리로 들어갈테니 통일성을 위해 'DELETE_PROCESS'라고 보내주는 게 더 나음.
             }.bind(this)}
           />
         </li>
